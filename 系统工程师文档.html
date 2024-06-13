@@ -769,6 +769,28 @@ p { margin-bottom: 1.25rem; }
 </li>
 </ul>
 </li>
+<li><a href="#_实践星">2. 实践星</a>
+<ul class="sectlevel2">
+<li><a href="#_安装git">2.1. 安装Git</a></li>
+<li><a href="#_安装java_11">2.2. 安装Java 11</a></li>
+<li><a href="#_安装maven">2.3. 安装maven</a></li>
+<li><a href="#_安装_mysql">2.4. 安装 MySQL</a></li>
+<li><a href="#_安装redis">2.5. 安装redis</a>
+<ul class="sectlevel3">
+<li><a href="#_配置redis">2.5.1. 配置redis</a></li>
+</ul>
+</li>
+<li><a href="#_配置实践星">2.6. 配置实践星</a></li>
+<li><a href="#_安装nginx">2.7. 安装Nginx</a></li>
+<li><a href="#_添加内网实践星的_nginx_配置">2.8. 添加内网实践星的 Nginx 配置</a></li>
+</ul>
+</li>
+<li><a href="#_pjlj">3. PJLJ</a>
+<ul class="sectlevel2">
+<li><a href="#_文件名列表生成下载链接">3.1. 文件名列表生成下载链接</a></li>
+<li><a href="#_生成下载脚本">3.2. 生成下载脚本</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -1324,9 +1346,1005 @@ systemctl reload php-fpm</code></pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
-<div class="paragraph">
-<p>Unresolved directive in sedoc.asc - include::book/03-SJX/sjx.asc[]</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_实践星">2. 实践星</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_安装git">2.1. 安装Git</h3>
+<div class="listingblock">
+<div class="title">安装软件包</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install -y git</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看版本</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git -v</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_安装java_11">2.2. 安装Java 11</h3>
+<div class="listingblock">
+<div class="title">更新包</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum update</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>更新系统中的所有软件包。</p>
+</div>
+<div class="listingblock">
+<div class="title">安装</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install -y java-11-openjdk java-11-openjdk-devel java-11-openjdk-headless</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>查找 Java 11 OpenJDK 的安装包。</p>
+</div>
+<div class="listingblock">
+<div class="title">查看版本</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -version</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">配置 Java 运行环境</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.18.0.10-3.el9.x86_64' &gt;&gt; ~/.bashrc
+echo 'export PATH=$JAVA_HOME/bin:$PATH' &gt;&gt; ~/.bashrc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 Java 11 的安装路径添加到环境变量中。</p>
+</div>
+<div class="listingblock">
+<div class="title">使配置生效</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">source ~/.bashrc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使环境变量的修改立即生效。</p>
+</div>
+<div class="listingblock">
+<div class="title">检查配置是否生效</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -version</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>检查 Java 版本以确认配置已生效。</p>
+</div>
+<div class="listingblock">
+<div class="title">设置java11为默认版本</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">alternatives --set java /usr/lib/jvm/java-11-openjdk-11.0.18.0.10-3.el9.x86_64/bin/java
+alternatives --set javac /usr/lib/jvm/java-11-openjdk-11.0.18.0.10-3.el9.x86_64/bin/javac
+alternatives --set jre_openjdk /usr/lib/jvm/java-11-openjdk-11.0.18.0.10-3.el9.x86_64
+alternatives --set java_sdk_openjdk /usr/lib/jvm/java-11-openjdk-11.0.18.0.10-3.el9.x86_64</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_安装maven">2.3. 安装maven</h3>
+<div class="listingblock">
+<div class="title">安装mavem</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bah hljs" data-lang="bah">wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+yum install -y apache-maven</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看版本</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn -v</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">安装所需要的应用</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install -y xmlstarlet</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">配置全局mvn仓库</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">xmlstarlet ed -L \
+    -d '/_:settings/_:mirrors/_:mirror' \
+    -s '/_:settings/_:mirrors' -t elem -n 'mirror' \
+    -s '/_:settings/_:mirrors/mirror' -t elem -n id -v 'aliyunmavenmirror' \
+    -s '/_:settings/_:mirrors/mirror' -t elem -n name -v '阿里云Maven公共仓库镜像' \
+    -s '/_:settings/_:mirrors/mirror' -t elem -n url -v 'https://maven.aliyun.com/repository/public' \
+    -s '/_:settings/_:mirrors/mirror' -t elem -n mirrorOf -v '*' \
+    /etc/maven/settings.xml</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">确认镜像是否添加成功</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">xmlstarlet el /etc/maven/settings.xml | grep settings/mirrors/mirror</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_安装_mysql">2.4. 安装 MySQL</h3>
+<div class="listingblock">
+<div class="title">添加官方源</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo yum install -y https://dev.mysql.com/get/mysql80-community-release-el9-5.noarch.rpm</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">倒入mysql仓库公钥</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-mysql*</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">更新</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum update</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">打印所有MySQL仓库列表</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum repolist all | grep mysql</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">打印启用的mysql仓库列表</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum repolist | grep mysql</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">打印mysql8.0仓库的软件包列表clea</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum repo-pkgs mysql80-community list</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">检查 mysql-community-server 的信息</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum info mysql-community-server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>查看 MySQL Community Server 的信息。</p>
+</div>
+<div class="listingblock">
+<div class="title">安装 MySQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install -y mysql-community-server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>安装 MySQL Community Server。</p>
+</div>
+<div class="listingblock">
+<div class="title">设置 MySQL 数据目录</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mkdir -p /data/mysql
+echo "datadir=/data/mysql" | sudo tee -a /etc/my.cnf</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">关闭 MySQLX 插件（端口33030）</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo mysqlx=0 &gt;&gt; /etc/my.cnf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>关闭 MySQLX 插件以释放端口 33030。</p>
+</div>
+<div class="listingblock">
+<div class="title">允许外部访问 MySQL 运行端口（3306）</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo bind-address=0.0.0.0 &gt;&gt; /etc/my.cnf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>允许外部主机访问 MySQL 运行端口 3306。</p>
+</div>
+<div class="listingblock">
+<div class="title">设置文件目录权限</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">chmod 644 /etc/my.cnf
+chmod -R 755 /data/mysql</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>设置配置文件和数据目录的权限。</p>
+</div>
+<div class="listingblock">
+<div class="title">检查 SELinux 设置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo setenforce 0  # 临时禁用 SELinux
+临时禁用 SELinux。</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">增加开机启动</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl enable mysqld
+# systemctl ： 系统服务的工具，用于启动，停止，重新加载和管理系统服务
+# enable ： 参数 用于指定服务在系统启动时自动启动</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">启动 MySQL 服务</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl start mysqld
+# systemctl ： 系统服务的工具，用于启动，停止，重新加载和管理系统服务
+# start ：  参数 启动指定服务</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">检查 MySQL 服务状态</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl status mysqld
+# systemctl ： 系统服务的工具，用于启动，停止，重新加载和管理系统服务
+# status ：  参数 获取服务的当前状态</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">修改密码</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">MYSQL_TMP_ROOT_PASSWORD=$(grep 'A temporary password' /var/log/mysqld.log | tail -n 1 | awk '{print $NF}')
+export SJX_MYSQL_ROOT_PASSWORD=$(openssl rand -base64 12)_$(openssl rand -base64 12)
+sed -i '/export SJX_/d' ~/.bash_profile &amp;&amp; env | grep SJX_ | awk '{print "export "$1}' &gt;&gt; ~/.bash_profile
+echo -e "  MySQL用户名：root\nMySQL临时密码：${MYSQL_TMP_ROOT_PASSWORD}\n  MySQL新密码：${SJX_MYSQL_ROOT_PASSWORD}"
+mysqladmin -uroot -p"${MYSQL_TMP_ROOT_PASSWORD}" password ${SJX_MYSQL_ROOT_PASSWORD}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看密码是否添加成功</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "${MYSQL_TMP_ROOT_PASSWORD}"
+echo "${SJX_MYSQL_ROOT_PASSWORD}"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看变量</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">env</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">安装应用</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install -y expect</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">无密码登陆设置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">unbuffer expect -c "
+spawn mysql_config_editor set --skip-warn --login-path=client --host=localhost --user=root --password
+expect -nocase \"Enter password:\" {send \"${SJX_MYSQL_ROOT_PASSWORD}\n\"; interact}
+"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看mysql无密码配置清单</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mysql_config_editor print --all</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看数据库列表</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mysql -e "show databases;"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">测试无密码登陆</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mysql</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">检查 mysql-community-server 的信息</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum info mysql-community-server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>查看 MySQL Community Server 的信息。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_安装redis">2.5. 安装redis</h3>
+<div class="listingblock">
+<div class="title">安装remi仓库</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install -y http://rpms.remirepo.net/enterprise/remi-release-9.rpm</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">导入公钥</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">更新</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum update</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">打印所有remi仓库列表</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum repolist all | grep -i remi</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">默认禁用remi仓库</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf config-manager --set-disabled remi-safe</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">安装redis软件包</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum --disablerepo=\* --enablerepo=remi search redis
+
+yum install -y redis</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看remi的版本</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum info remi-release</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">打印redis软件包信息</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum info redis</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_配置redis">2.5.1. 配置redis</h4>
+<div class="listingblock">
+<div class="title">监听系统所以ip</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed -i "s/^bind.*/bind \*/" /etc/redis/redis.conf</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">开机启动</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl enable redis</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">设置redis默认用户密码</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># 生成随机密码并保存到环境变量中
+export SJX_REDIS_PASSWORD=$(openssl rand -base64 20 | tr -dc 'a-zA-Z0-9' | head -c 20)
+
+# 永久保存临时配置（重新登录或重启都有效）
+sed -i '/export SJX_/d' ~/.bash_profile &amp;&amp; echo "export SJX_REDIS_PASSWORD=${SJX_REDIS_PASSWORD}" &gt;&gt; ~/.bash_profile
+
+# 输出 Redis 密码
+echo "Redis默认用户密码：${SJX_REDIS_PASSWORD}"
+
+# 修改 redis.conf 文件中的密码设置
+sed -i "s/# requirepass .*/requirepass ${SJX_REDIS_PASSWORD}/" /etc/redis/redis.conf</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">启动redis</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl start redis</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看服务状态</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl status redis</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看密码是否正确配置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">grep '^requirepass' /etc/redis/redis.conf</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">测试redis链接</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export REDISCLI_AUTH=${SJX_REDIS_PASSWORD}
+redis-cli ping</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_配置实践星">2.6. 配置实践星</h3>
+<div class="listingblock">
+<div class="title">创建 MySQL 用户</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># 设置 MySQL 用户参数
+export SJX_MYSQL_HOST=localhost
+export SJX_MYSQL_DB=sjx
+export SJX_MYSQL_USER_NAME=sjx
+export SJX_MYSQL_USER=${SJX_MYSQL_USER_NAME}@${SJX_MYSQL_HOST}
+export SJX_MYSQL_PASSWORD=$(openssl rand -base64 20)
+
+# 永久保存临时配置（重新登录或重启都有效）
+sed -i '/export SJX_/d' ~/.bash_profile &amp;&amp; env | grep SJX_ | awk '{print "export "$1}' &gt;&gt; ~/.bash_profile
+
+# 创建数据库和用户
+mysql -e "DROP DATABASE IF EXISTS ${SJX_MYSQL_DB}; CREATE DATABASE ${SJX_MYSQL_DB};"
+mysql -e "DROP USER IF EXISTS ${SJX_MYSQL_USER}; CREATE USER ${SJX_MYSQL_USER} IDENTIFIED BY '${SJX_MYSQL_PASSWORD}';"
+mysql -e "GRANT ALL ON ${SJX_MYSQL_DB}.* TO ${SJX_MYSQL_USER} WITH GRANT OPTION;"
+
+# 输出连接参数
+echo -e "实践星 MySQL 连接参数：\n\tMySQL 主机地址：${SJX_MYSQL_HOST}\n\tMySQL 主机端口：3306\n\tMySQL 数据库名：${SJX_MYSQL_DB}\n\tMySQL 用户名称：${SJX_MYSQL_USER_NAME}\n\tMySQL 用户密码：${SJX_MYSQL_PASSWORD}"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">配置实践星用户无密码登录</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install -y expect
+
+unbuffer expect -c "
+spawn mysql_config_editor set --skip-warn --login-path=${SJX_MYSQL_USER_NAME} --host=${SJX_MYSQL_HOST} --user=${SJX_MYSQL_USER_NAME} --password
+expect -nocase \"Enter password:\" {send \"${SJX_MYSQL_PASSWORD}\n\"; interact}
+"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">测试实践星 MySQL 用户连接</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mysql --login-path=sjx sjx -e 'select user();'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">创建内网实践星用户</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">useradd --home-dir /var/lib/sjx --create-home --shell /sbin/nologin --comment "Shi Jian Xing" sjx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看 sjx 用户</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">getent passwd sjx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">创建内网实践星目录和文件</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mkdir -p /opt/sjx/bin /etc/sjx /var/lib/sjx/images/avatar /var/log/sjx
+touch /var/log/sjx/error.log
+chown -R sjx:sjx /var/lib/sjx /var/log/sjx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">本地克隆实践星代码</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mkdir ~/workspace &amp;&amp; cd ~/workspace/
+git clone https://gitee.com/fifilyu/shi-jian-xing.git</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">本地打包实践星</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn -f ~/workspace/shi-jian-xing package
+cp ~/workspace/shi-jian-xing/target/shi-jian-xing-0.0.1.jar /opt/sjx/bin/</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">从模板创建配置文件</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ~/workspace/shi-jian-xing
+cp src/main/resources/application.properties.sample /etc/sjx/application.properties
+cp src/main/resources/logback.xml.sample /etc/sjx/logback.xml</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">安装crudini</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install -y crudini</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">生成内网实践星主配置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">crudini --set --existing /etc/sjx/application.properties "" server.address '0.0.0.0'
+
+crudini --set --existing /etc/sjx/application.properties "" server.port '8383'
+
+crudini --set --existing /etc/sjx/application.properties "" spring.datasource.url 'jdbc:mysql://'${SJX_MYSQL_HOST}'/'${SJX_MYSQL_DB}'?createDatabaseIfNotExist=True&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=yes&amp;characterEncoding=UTF-8'
+
+crudini --set --existing /etc/sjx/application.properties "" spring.datasource.username "${SJX_MYSQL_USER_NAME}"
+
+crudini --set --existing /etc/sjx/application.properties "" spring.datasource.password "${SJX_MYSQL_PASSWORD}"
+
+crudini --set --existing /etc/sjx/application.properties "" spring.redis.password "${SJX_REDIS_PASSWORD}"
+
+crudini --set --existing /etc/sjx/application.properties "" logging.config '/etc/sjx/logback.xml'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">确认修改后的实践星主配置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">egrep -nh '(server\..*)|(spring\.datasource\.(url|username|password))|(spring\.redis\.password)|(logging\.config)' /etc/sjx/application.properties</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看是否成功添加</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat  /etc/sjx/application.properties</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">生成实践星日志配置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">grep '&lt;file&gt;' /etc/sjx/logback.xml</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">更新实践星的 jar 文件软链接</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd /opt/sjx/bin/
+ln -fs shi-jian-xing-0.0.1.jar sjx.jar</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">创建内网实践星的 service 文件</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt; EOF &gt; /usr/lib/systemd/system/sjx.service
+[Unit]
+Description=ShiJianXing: A Spring Boot Demo
+After=network.target network-online.target nss-lookup.target
+
+[Service]
+Type=simple
+Environment="CONFIG_FILE=/etc/sjx/application.properties"
+Environment="JAR_FILE=/opt/sjx/bin/sjx.jar"
+
+User=sjx
+Group=sjx
+WorkingDirectory=/var/lib/sjx
+ExecStart=/usr/bin/java -Dspring.config.location=\${CONFIG_FILE} -jar \${JAR_FILE}
+SuccessExitStatus=143
+StandardOutput=null
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+EOF</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">开机启动内网实践星</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl enable sjx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">启动内网实践星</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl start sjx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看状态</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl status sjx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看日志</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tail -f /var/log/sjx/error.log</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_安装nginx">2.7. 安装Nginx</h3>
+<div class="listingblock">
+<div class="title">yum search 包的名字</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum search nginx
+#  搜索 Nginx 软件包。</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">增加 Nginx 官方源</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt; EOF &gt; /etc/yum.repos.d/nginx.repo
+[nginx-stable]
+name=nginx stable repo
+baseurl=http://nginx.org/packages/centos/\$releasever/\$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
+EOF</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">安装 Nginx</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install -y nginx-1.24.0
+#  安装 Nginx，并检查版本。</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">确认nginx是来自官方</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum info nginx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">备份原始配置文件</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">test -f /etc/nginx/nginx.conf.init || cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.init</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">修改 Nginx 主配置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt; EOF &gt; /etc/nginx/nginx.conf
+# Nginx 主配置文件
+# 更多配置信息，请参考：
+#   * 官方英文文档: http://nginx.org/en/docs/
+#   * 官方俄文文档: http://nginx.org/ru/docs/
+
+# 设置用户
+user nginx;
+# 设置工作进程数量
+worker_processes auto;
+# 设置错误日志
+error_log  /var/log/nginx/error.log warn;
+# 设置进程 ID 文件
+pid        /var/run/nginx.pid;
+
+# 设置工作进程的最大打开文件数
+worker_rlimit_nofile 65535;
+
+events {
+    worker_connections 65535;
+}
+
+http {
+    # 包含 MIME 类型
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # 设置日志格式
+    log_format  main  '\$host \$server_port \$remote_addr - \$remote_user [\$time_local] "\$request" '
+                      '\$status \$request_time \$body_bytes_sent "\$http_referer" '
+                      '"\$http_user_agent" "\$http_x_forwarded_for"';
+
+    # 访问日志路径
+    access_log  /var/log/nginx/access.log  main;
+
+    # 开启 sendfile
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 2048;
+
+    # 设置 server_names_hash_bucket_size
+    server_names_hash_bucket_size 128;
+    server_name_in_redirect off;
+    client_header_buffer_size 32k;
+    large_client_header_buffers 4 32k;
+
+    # 客户端请求头的超时时间
+    client_header_timeout  3m;
+    client_body_timeout    3m;
+    client_max_body_size 50m;
+    client_body_buffer_size 256k;
+    send_timeout           3m;
+
+    # 开启 gzip 压缩
+    gzip  on;
+    gzip_min_length  1k;
+    gzip_buffers     4 16k;
+    gzip_http_version 1.0;
+    gzip_comp_level 2;
+    gzip_types image/svg+xml application/x-font-wof text/plain text/xml text/css application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript text/javascript;
+    gzip_vary on;
+
+    # 设置代理头
+    proxy_redirect off;
+    proxy_set_header Host \$host;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header REMOTE-HOST \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_connect_timeout 60;
+    proxy_send_timeout 60;
+    proxy_read_timeout 60;
+    proxy_buffer_size 256k;
+    proxy_buffers 4 256k;
+    proxy_busy_buffers_size 256k;
+    proxy_temp_file_write_size 256k;
+    proxy_next_upstream error timeout invalid_header http_500 http_503 http_404;
+    proxy_max_temp_file_size 128m;
+    # 让代理服务端不要主动关闭客户端的连接，协助处理499返回代码问题
+    proxy_ignore_client_abort on;
+
+    fastcgi_buffer_size 64k;
+    fastcgi_buffers 4 64k;
+    fastcgi_busy_buffers_size 128k;
+
+    # 设置默认索引文件
+    index index.html index.htm index.php default.html default.htm default.php;
+
+    # 加载 /etc/nginx/conf.d 目录下的模块化配置文件
+    include /etc/nginx/conf.d/*.conf;
+}
+EOF</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">创建目录</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mkdir -p /etc/nginx/conf.d</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">备份原始文件</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">test -f /etc/nginx/conf.d/default.conf &amp;&amp; (test -f /etc/nginx/conf.d/default.conf.init || cp /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.init)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">增加默认 Host</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt; EOF &gt; /etc/nginx/conf.d/default.conf
+server {
+    listen       80 default_server;
+    listen       [::]:80 default_server;
+    server_name  _;
+    root         /usr/share/nginx/html;
+
+    # Load configuration files for the default server block.
+    include /etc/nginx/default.d/*.conf;
+
+    location / {
+    }
+
+    error_page 404 /404.html;
+    location = /40x.html {
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+    }
+}
+EOF</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">测试 Nginx 配置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">nginx -t &amp;&amp; (test -s /var/run/nginx.pid || rm -f /var/run/nginx.pid)
+#  测试 Nginx 配置是否正确。</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">增加开机启动</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl enable nginx
+设置 Nginx 开机自启动。</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">检查配置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl start nginx
+systemctl status nginx
+检查 Nginx 配置，并启动 Nginx 服务，查看服务状态。</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_添加内网实践星的_nginx_配置">2.8. 添加内网实践星的 Nginx 配置</h3>
+<div class="listingblock">
+<div class="title">配置实践星 Nginx</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt; EOF &gt; /etc/nginx/conf.d/test.sjx.com.conf
+server {
+    listen       80;
+    server_name  test.sjx.com;
+    root         /var/lib/sjx;
+
+    location / {
+        proxy_set_header Host \$http_host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-Proto http;
+
+        proxy_pass http://127.0.0.1:8383;
+    }
+}
+EOF</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">检测语法是否正确</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">nginx -t</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">修改实践星主配置文件</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">crudini --set --existing /etc/sjx/application.properties "" server.address '127.0.0.1'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">确认修改后的实践星主配置</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">egrep -nh 'server\.address' /etc/sjx/application.properties</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">重启实践星服务</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl restart sjx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">关闭防火墙</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl stop firewalld
+sudo systemctl disable firewalld</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">重启实践星</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl restart sjx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">移除内网临时环境变量</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed -i '/export SJX_/d' ~/.bash_profile
+source ~/.bash_profile</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">重启</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl restart sjx
+systemctl restart nginx
+systemctl restart mysqld
+systemctl restart redis</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">查看状态</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl status sjx
+systemctl status nginx
+systemctl status mysqld
+systemctl status redis</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">增加本地hosts文件当中</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "192.168.2.122 test.sjx.com" | sudo tee -a /etc/hosts</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">访问实践星</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">http://test.sjx.com/</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pjlj">3. PJLJ</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_文件名列表生成下载链接">3.1. 文件名列表生成下载链接</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def generate_download_link(file_id, file_name):
+    return f"https://assrt.net/download/{file_id}/{file_name}"
+
+def process_line(idx, line, f_out, f_error):
+    line = line.strip()
+    if not line:
+        f_error.write(f"第{idx}行: 空行\n")
+        print(f"第{idx}行: 空行")
+        return
+    try:
+        file_id, file_name = line.split('\t')
+    except ValueError:
+        parts = line.split('"')
+        if len(parts) &gt;= 2:
+            file_id = parts[0].strip()
+            file_name = parts[-1].strip()
+        else:
+            f_error.write(f"格式错误在第{idx}行: {line}\n")
+            print(f"格式错误在第{idx}行: {line}")
+            return
+    download_link = generate_download_link(file_id, file_name)
+    f_out.write(f"{download_link}\n")
+    print(f"第{idx}行: {download_link}")
+
+if __name__ == "__main__":
+    file_list_file = '/home/yyf/PycharmProjects/she _shou/文件名列表.txt'
+    output_file = '/home/yyf/PycharmProjects/she _shou/pj_wc.txt'
+    error_file = '/home/yyf/PycharmProjects/she _shou/pj_cw.txt'
+
+    try:
+        with open(file_list_file, 'r') as f:
+            lines = f.readlines()
+
+        with open(output_file, 'w') as f_out, open(error_file, 'w') as f_error:
+            for idx, line in enumerate(lines, start=1):
+                process_line(idx, line, f_out, f_error)
+
+        print(f"所有链接已保存到文件：{output_file}")
+        print(f"不符合要求的行已保存到文件：{error_file}")
+
+    except FileNotFoundError:
+        print(f"文件 {file_list_file} 未找到。")
+    except Exception as e:
+        print(f"发生错误：{e}")</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_生成下载脚本">3.2. 生成下载脚本</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">def generate_wget_command(download_link):
+    return f"wget -o d.log --header 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36 OPR/38.0.2220.41' {download_link}"
+
+if __name__ == "__main__":
+    input_file = '/home/yyf/PycharmProjects/she _shou/pj_wc.txt'
+    wget_script = '/home/yyf/PycharmProjects/she _shou/sheshou.sh'
+
+    try:
+        with open(input_file, 'r') as f:
+            lines = f.readlines()
+
+        with open(wget_script, 'w') as f_wget:
+            f_wget.write("#!/bin/bash\n\n")  # 添加 bash 脚本头部
+
+            for idx, line in enumerate(lines, start=1):
+                line = line.strip()  # 去掉多余的换行符
+                if line:  # 如果不是空行，生成wget命令
+                    wget_command = generate_wget_command(line)
+                    f_wget.write(f"{wget_command}\n")
+                    print(f"生成第{idx}行wget命令：{wget_command}")
+
+        print(f"所有wget命令已保存到文件：{wget_script}")
+
+    except FileNotFoundError:
+        print(f"文件 {input_file} 未找到。")
+    except Exception as e:
+        print(f"发生错误：{e}")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在以上代码中，第一个脚本从文件名列表中提取文件ID和文件名，并生成对应的下载链接。第二个脚本则根据生成的下载链接生成wget命令，并将其保存到指定的脚本文件中以便执行下载操作。
+&lt;&lt;&lt;</p>
 </div>
 </div>
 </div>
@@ -1334,7 +2352,7 @@ systemctl reload php-fpm</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-06-12 19:55:54 +0800
+Last updated 2024-06-13 10:44:12 +0800
 </div>
 </div>
 <script src="js/highlight.min.js"></script>
